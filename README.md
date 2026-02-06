@@ -102,8 +102,9 @@ O arquivo `process_query.php` deve:
     "Ok": "97.65"
   }
 ]
-
+```
 
 ## Dashboard
+
 <img width="1902" height="893" alt="image" src="https://github.com/user-attachments/assets/6c1a5575-9cb2-42be-8635-6a0c06e0698e" />
 
