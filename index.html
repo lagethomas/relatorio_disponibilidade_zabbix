@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SLA Flow - Valgroup SQL</title>
+    <title>SLA Flow - ZABBIX SQL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,7 +33,7 @@
             </button>
         </nav>
         <div class="pt-6 border-t border-[var(--border)] text-center">
-            <p class="text-[9px] text-[var(--primary)] uppercase tracking-widest font-black">VALGROUP</p>
+            <p class="text-[9px] text-[var(--primary)] uppercase tracking-widest font-black">ZABBIX</p>
         </div>
     </aside>
 
@@ -186,7 +186,7 @@
             const ws = XLSX.utils.json_to_sheet(reportData);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "SLA");
-            XLSX.writeFile(wb, "SLA_Valgroup.xlsx");
+            XLSX.writeFile(wb, "SLA_FLOW.xlsx");
         }
     </script>
 </body>
