@@ -1,0 +1,24 @@
+# Disable directory listing
+Options -Indexes
+
+# Hide Apache server signature
+ServerSignature Off
+
+# Security headers for all responses
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+    # Prevent caching of sensitive responses
+    <FilesMatch "\.php$">
+        Header always set Cache-Control "no-store, no-cache, must-revalidate, private"
+        Header always set Pragma "no-cache"
+    </FilesMatch>
+</IfModule>
+
+# Block direct access to hidden files
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

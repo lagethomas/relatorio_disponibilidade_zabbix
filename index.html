@@ -89,6 +89,15 @@
         let reportData = [];
         let charts = {};
 
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         window.onload = () => {
             ['dbHost','dbName','dbUser','dateStart','dateEnd','filterGroup','filterHost'].forEach(id => {
                 document.getElementById(id).value = localStorage.getItem('z_'+id) || '';
@@ -138,10 +147,10 @@
                 
                 body.innerHTML = reportData.map(i => `
                     <tr class="hover:bg-white/5 border-b border-white/[0.03]">
-                        <td class="p-6 font-bold text-[var(--primary)]">${i.Host}</td>
-                        <td class="p-6 text-xs text-slate-400">${i.Nome}</td>
-                        <td class="p-6 text-center text-red-500 font-bold">${i.Incidentes}%</td>
-                        <td class="p-6 text-right text-emerald-400 font-black">${i.Ok}%</td>
+                        <td class="p-6 font-bold text-[var(--primary)]">${escapeHTML(i.Host)}</td>
+                        <td class="p-6 text-xs text-slate-400">${escapeHTML(i.Nome)}</td>
+                        <td class="p-6 text-center text-red-500 font-bold">${escapeHTML(i.Incidentes)}</td>
+                        <td class="p-6 text-right text-emerald-400 font-black">${escapeHTML(i.Ok)}</td>
                     </tr>
                 `).join('');
 
@@ -153,7 +162,7 @@
 
             } catch (e) {
                 counter.innerText = "Erro";
-                body.innerHTML = `<tr><td colspan="4" class="p-20 text-center text-red-500">${e.message}</td></tr>`;
+                body.innerHTML = `<tr><td colspan="4" class="p-20 text-center text-red-500">${escapeHTML(e.message)}</td></tr>`;
             } finally {
                 icon.classList.remove('animate-sync');
                 btn.disabled = false;
