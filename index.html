@@ -69,7 +69,7 @@
                 <div class="bg-[#16191e] rounded-3xl border border-[var(--border)] overflow-hidden shadow-2xl">
                     <table class="w-full text-left">
                         <thead class="bg-[#1c2026] text-[10px] uppercase text-slate-500 font-black tracking-widest border-b border-[var(--border)]">
-                            <tr><th class="p-6">Host</th><th class="p-6">Gatilho</th><th class="p-6 text-center">Incidentes (%)</th><th class="p-6 text-right">OK (%)</th></tr>
+                            <tr><th class="p-6">Host</th><th class="p-6">Gatilho</th><th class="p-6 text-center">Quedas</th><th class="p-6 text-center">Min. Fora</th><th class="p-6 text-center">Incidentes (%)</th><th class="p-6 text-right">OK (%)</th></tr>
                         </thead>
                         <tbody id="tableBody" class="divide-y divide-[var(--border)] text-sm"></tbody>
                     </table>
@@ -121,7 +121,7 @@
             icon.classList.add('animate-sync');
             btn.disabled = true;
             counter.innerText = "Calculando...";
-            body.innerHTML = '<tr><td colspan="4" class="p-20 text-center text-[var(--primary)] font-black text-xs tracking-widest">Processando...</td></tr>';
+            body.innerHTML = '<tr><td colspan="6" class="p-20 text-center text-[var(--primary)] font-black text-xs tracking-widest">Processando...</td></tr>';
 
             try {
                 const response = await fetch('process_query.php', {
@@ -149,6 +149,8 @@
                     <tr class="hover:bg-white/5 border-b border-white/[0.03]">
                         <td class="p-6 font-bold text-[var(--primary)]">${escapeHTML(i.Host)}</td>
                         <td class="p-6 text-xs text-slate-400">${escapeHTML(i.Nome)}</td>
+                        <td class="p-6 text-center text-amber-400 font-bold">${escapeHTML(i.Quedas)}</td>
+                        <td class="p-6 text-center text-orange-400 font-bold">${escapeHTML(i.MinutosFora)}</td>
                         <td class="p-6 text-center text-red-500 font-bold">${escapeHTML(i.Incidentes)}</td>
                         <td class="p-6 text-right text-emerald-400 font-black">${escapeHTML(i.Ok)}</td>
                     </tr>
@@ -162,7 +164,7 @@
 
             } catch (e) {
                 counter.innerText = "Erro";
-                body.innerHTML = `<tr><td colspan="4" class="p-20 text-center text-red-500">${escapeHTML(e.message)}</td></tr>`;
+                body.innerHTML = `<tr><td colspan="6" class="p-20 text-center text-red-500">${escapeHTML(e.message)}</td></tr>`;
             } finally {
                 icon.classList.remove('animate-sync');
                 btn.disabled = false;

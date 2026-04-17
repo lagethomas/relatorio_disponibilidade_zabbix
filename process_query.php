@@ -114,6 +114,8 @@ try {
     SELECT
         h.name AS Host,
         tr.description AS Nome,
+        COALESCE(sla.total_quedas, 0) AS Quedas,
+        ROUND(COALESCE(sla.total_downtime, 0) / 60, 2) AS MinutosFora,
         ROUND(COALESCE(sla.total_downtime, 0) / :diff * 100, 4) AS Incidentes
     FROM triggers tr
     INNER JOIN (
@@ -127,6 +129,7 @@ try {
     LEFT JOIN (
         SELECT
             objectid,
+            COUNT(*) as total_quedas,
             SUM(GREATEST(0, LEAST(next_clock, :end) - GREATEST(clock, :start))) as total_downtime
         FROM (
             SELECT
@@ -159,7 +162,12 @@ try {
     $results = $stmt->fetchAll();
 
     foreach ($results as &$row) {
-        $inc = (float)$row['Incidentes'];
+        $inc     = (float)$row['Incidentes'];
+        $minutos = (float)$row['MinutosFora'];
+
+        $row['Quedas']      = (int)$row['Quedas'];
+        $row['MinutosFora'] = $minutos > 0 ? number_format($minutos, 2, '.', '') : '0';
+
         if ($inc <= 0.0001) {
             $row['Incidentes'] = '';
             $row['Ok'] = '100.0000%';
